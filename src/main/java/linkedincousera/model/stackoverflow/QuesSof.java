@@ -2,9 +2,7 @@ package linkedincoursera.model.stackoverflow;
 
 import java.util.List;
 
-/**
- * Created by harsh on 4/25/15.
- */
+
 public class QuesSof {
     private List<QuestionCountSOF> items;
     private boolean has_more;
