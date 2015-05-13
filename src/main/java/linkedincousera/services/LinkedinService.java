@@ -78,38 +78,36 @@ public class LinkedinService {
             throw new Exception(e);
         }
     }
-    public void insertUser() {
+    public void insertUser(String name, String email, String photo, String headline, String summary) {
         LinkedinUser user = new LinkedinUser();
-        user.setUserName("Harshank Vengurlekar");
-        user.setProfilePhotoUrl("https://media.licdn.com/mpr/mprx/0_3PuunxiPvk_Z-5mtTqpxnpPlvTl4K5YtiNZ1npCaEk5d73W-Svy84y9hUfA61CxYhKmtMUpHkkUh");
-        user.setHeadline("Graduate Student at San Jose State Univeristy");
-        user.setSummary("Experience in developing Web based, Client/Server, Distributed Architecture applications using Java, J2EE, Node.js.\n" +
-                "\n" +
-                "Specialties: Java, JavaScript, Node.js, REST API, SQL, NoSQL, SDLC, Scalable Architecture, Distributed Systems, Caching.");
 
+        user.setUserName(name);
+        user.setProfilePhotoUrl(photo);
+        user.setHeadline(headline);
+        user.setSummary(summary);
+        user.setEmail(email);
         List<Positions> positions = new ArrayList<Positions>();
-        positions.add(0, new Positions("Openradix Software Solutions", "Java Developer"));
-        positions.add(1, new Positions("Mozilla Firefox", "Project Intern"));
+        positions.add(0, new Positions("Bitcasa", "QA Automation Engineer"));
         user.setPositions(positions);
         List<Educations> edu = new ArrayList<Educations>();
         edu.add(0, new Educations("", "Masters", "San Jose State University","Software Engineering"));
-        edu.add(1, new Educations("", "Bachelors", "University of Mumbai","Computer Engineering"));
+        edu.add(1, new Educations("", "Bachelors", "University of California, Berkeley","Molecular and Cell Biology"));
         user.setEducation(edu);
         List<String> skills = new ArrayList<String>();
-        skills.add(0,"Java");
-        skills.add(1,"Node.js");
-        skills.add(2,"MySQL");
+        skills.add(0,"Python");
+        skills.add(1,"Java");
+        skills.add(2,"C");
         skills.add(3,"C++");
-        skills.add(4, "JavaScript");
+        skills.add(4, "SQL");
         skills.add(5,"Linux");
-        skills.add(6,"MongoDb");
-        skills.add(7, "jQuery");
         user.setSkillSet(skills);
+//        user.setCity("Milpitas");
+//        user.setState("CA");
         linkedinRepo.insertLinkedUser(user);
     }
-    public LinkedinUser findUser(String name) {
-        return linkedinRepo.findUser(name).get(0);
-
+    public LinkedinUser findUserByEmail(String email) {
+        if(linkedinRepo.findUserByEmail(email)!=null)
+            return linkedinRepo.findUserByEmail(email).get(0);
+        else return null;
     }
 }
-
