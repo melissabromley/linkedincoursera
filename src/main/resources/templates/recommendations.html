@@ -1,0 +1,107 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/kendo.common.min.css}"
+          href="../css/kendo.common.min.css"/>
+    <link rel="stylesheet"
+          th:href="@{/css/kendo.bootstrap.min.css}"
+          href="../css/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet"
+          th:href="@{/css/kendo.dataviz.min.css}"
+          href="../css/kendo.dataviz.min.css"/>
+    <link rel="stylesheet"
+          th:href="@{/css/kendo.dataviz.default.min.css}"
+          href="../css/kendo.dataviz.default.min.css"/>
+    <link rel="stylesheet"
+          th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:300,400,700}"
+          href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+    <link rel="stylesheet" media="screen"
+          th:href="@{/assets/css/font-awesome.min.css}"
+          href="../assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          th:href="@{/assets/css/bootstrap.min.css}"
+          href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" media="screen"
+          th:href="@{/assets/css/bootstrap-theme.css}"
+          href="../assets/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" media="screen"
+          th:href="@{/assets/css/main.css}"
+          href="../assets/css/main.css"/>
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="../js/my.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top headroom" >
+    <div class="container">
+        <div class="navbar-header">
+            <!-- Button for smallest screens -->
+            <a class="navbar-brand" href="/"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="active"><a class="btn" href="/signout">Sign out</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="active"><a class="btn" href="/main">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="active"><a class="btn" href="/jobs">Jobs</a></li>
+                <li class="active"><a class="btn" href="/recommendation">Recommendation</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+<div style="margin-top: 8%;">
+    <p th:text="${userName}" />
+    <h2>Skills</h2>
+    <label>Skill: </label>
+    <input id="skillName" />
+    <span>
+        <button id="submitSkill" class="k-primary">Go</button>
+    </span>
+</div>
+</body>
+<body>
+
+    </div>
+    <h2>Jobs</h2>
+    <tr th:each="course : ${courseraCourses}">
+        <td th:text="${course.name}">1</td>
+        <td th:text="${course.photo}">T</td>
+        <td th:text="${course.shortDescription}"></td>
+        <td th:text="${course.instructor}"></td>
+        <td th:text="${course.previewLink}"></td>
+        <br />
+    </tr>
+
+<div id ="courseDiv">
+
+</div>
+</body>
+<script th:inline="javascript">
+    var skill = [[${skills}]];
+    $(document).ready(function() {
+        $("#submitSkill").kendoButton();
+        $("#skillName").kendoDropDownList({
+//            dataTextField: "text",
+//            dataValueField: "value",
+            dataSource: skill,
+            height: 100
+        });
+    });
+    $( "#submitSkill" ).bind( "click", function() {
+        fetchCourses($("#skillName").val());
+    });
+</script>
+
+</html>
