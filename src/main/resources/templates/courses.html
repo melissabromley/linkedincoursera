@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Dashboard</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/stylish-portfolio.css}"
+          href="../css/stylish-portfolio.css"/>
+    <!-- Custom Fonts -->
+
+    <link rel="stylesheet"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"
+          href="../font-awesome/css/font-awesome.min.css"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<ul class="nav nav-pills">
+    <li role="presentation"><a href="/dashboard">Home</a></li>
+    <li role="presentation"><a href="/recommendations/jobs">Jobs</a></li>
+    <li role="presentation" class="active"><a href="/recommendations/courses">Courses</a></li>
+</ul>
+<div class="jumbotron">
+    <div class="container">
+
+        <h1>Recommended Courses</h1>
+        <!--<a href="/email" class="btn btn-dark btn-lg">Email Details</a>-->
+
+        <h3>Coursera</h3>
+        <!-- Table -->
+        <table class="table" >
+            <thead>
+            <tr>
+                <!--<th>Course ID</th>-->
+                <th></th>
+                <th>ID</th>
+                <th>Course Name</th>
+                <!--<th>Short Name</th>-->
+                <th>Instructor</th>
+                <th>Description</th>
+                <th>Homepage</th>
+                <!--<th>Start Date</th>-->
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courseraCourses}">
+                <td><img class="img-circle" th:src="${course.photo}" width="150" /></td>
+                <td th:text="${course.id}"></td>
+                <td th:text="${course.name}"></td>
+                <!--<td th:text="${course.shortName}"></td>-->
+                <!--<td th:text="${course.shortDescription}"></td>-->
+                <td th:text="${course.instructor}"></td>
+                <td th:text="${course.shortDescription}"></td>
+                <td ><a th:href="@{${course.homeLink}}" ><p th:text="${course.homeLink}" style="font-size:15px;"></p></a></td>
+                <!--<td th:text="${course.startDay}+' '+ ${course.startMonth}+' '+ ${course.startYear}"></td>-->
+                <td>
+                    <input type="checkbox" th:checked="${course.savedCourse}" th:id="${course.id}+'_cb'" th:onchange="'javascript:saveCourse(\'' + ${course.id} + '\',\'' + ${course.name} + '\',\'' + ${course.homeLink} + '\',\'' + ${course.instructor} + '\',\'' + ${userEmail} + '\',\'' + ${course.startDay} + '\',\'' + ${course.startMonth} + '\',\'' + ${course.startYear} + '\');'" />
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+        <br />
+        <h3>Udacity</h3>
+        <table class="table" style="margin-top:-10%;">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Course Key</th>
+                <th>Course Name</th>
+                <th>Short Name</th>
+                <th>Summary</th>
+                <!--<th>Tracks</th>-->
+                <th>Homepage</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${udacityCourses}">
+                <td><img class="img-circle" th:src="${course.image}" width="150" /></td>
+                <td th:text="${course.key}"></td>
+                <td th:text="${course.title}"></td>
+                <td th:text="${course.subtitle}"></td>
+                <td th:text="${course.short_summary}"></td>
+                <!--<td th:text="${course.summary}"></td>-->
+                <!--<td th:text="${course.expected_learning}"></td>-->
+                <!--<td th:text="${course.syllabus}"></td>-->
+                <!--<td th:text="${course.tracks}"></td>-->
+                <td ><a th:href="@{${course.homepage}}" ><p th:text="${course.homepage}" style="font-size:15px;"></p></a></td>
+                <br>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<script th:inline="javascript">
+    var course = [[${courseraCourses}]];
+    console.log(course);
+    function saveCourse(id, name, link, instructor, userEmail, day, month, year) {
+        console.log(day+' '+month);
+        if($("#"+id+"_cb").is( ":checked" )) {
+            $.ajax({
+                type:"POST",
+                url: "/courses/"+userEmail+"/save",
+                data: JSON.stringify({
+                    "id": id,
+                    "name": name,
+                    "homeLink": link,
+                    "instructor": instructor,
+                    "startDay":day,
+                    "startMonth": month,
+                    "startYear": year
+                }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                },
+                error: function (e) {
+                }
+            });
+        } else if(!$("#"+id+"_cb").is( ":checked" )) {
+            $.ajax({
+                type:"DELETE",
+                url: "/courses/"+userEmail+"/"+id,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                },
+                error: function (e) {
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
