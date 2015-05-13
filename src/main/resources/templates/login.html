@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Login</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet"
+		  th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:300,400,700}"
+		  href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+		<link rel="stylesheet"
+		  th:href="@{/assets/css/bootstrap.min.css}"
+		  href="../assets/css/bootstrap.min.css"/>
+		<link rel="stylesheet" media="screen"
+		  th:href="@{/assets/css/font-awesome.min.css}"
+		  href="../assets/css/font-awesome.min.css"/>
+		<link rel="stylesheet" media="screen"
+		  th:href="@{/assets/css/bootstrap-theme.css}"
+		  href="../assets/css/bootstrap-theme.css"/>
+		<link rel="stylesheet" media="screen"
+		  th:href="@{/assets/css/main.css}"
+		  href="../assets/css/main.css"/>
+		
+	</head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="assets/js/headroom.min.js"></script>
+	<script src="assets/js/jQuery.headroom.min.js"></script>
+	<script src="assets/js/template.js"></script>
+	
+	<body>
+	
+	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
+		<div class="container">
+			<div class="navbar-header">
+			</div>
+			<div class="navbar-collapse collapse">
+			</div><!--/.nav-collapse -->
+		</div>
+	</div> 
+	<!-- /.navbar -->
+
+	<header id="head" class="secondary"></header>
+
+	<!-- container -->
+	<div class="container">
+
+		<div class="row">
+			
+			<!-- Article main content -->
+			<article class="col-xs-12 maincontent">
+				<header class="page-header">
+					<h1 class="page-title">Sign in</h1>
+				</header>
+				
+				<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3 class="thin text-center">Sign in to your account</h3>
+							<hr />
+
+							<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+							<form method="post" action="#" th:action="@{/signin}">
+
+								<div class="top-margin">
+								<hr />
+								<div class="row">
+									<div class="col-lg-4 text-right">
+										<button class="btn btn-action" type="submit">Sign in</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				
+			</article>
+			<!-- /Article -->
+
+		</div>
+	</div>	<!-- /container -->
+	
+	</body>
+	</html>
